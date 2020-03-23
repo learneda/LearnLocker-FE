@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import socket from 'App/socket'
 import styled from 'styled-components'
 import HelpScreen from 'components/Screens/HelpScreen'
@@ -10,6 +11,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import ScrollToTopOnMount from 'components/Utils/ScrollToTopOnMount'
 import PostContainer from './Post/'
 import FeedPlaceholder from './Post/FeedPlaceholder'
+import { postComment } from 'pages/Home/store/homeActions'
 
 const Feed = props => {
   const {
@@ -22,7 +24,7 @@ const Feed = props => {
     fetchMoreFeed,
     fetchMoreTagFeed,
   } = props
-
+  const dispatch = useDispatch()
   const handleSubmit = (event, post_id, comment, postOwnerId) => {
     const body = comment.trim()
     if (body) {
@@ -34,6 +36,8 @@ const Feed = props => {
         username: user.username,
         postOwnerId,
       }
+      dispatch(postComment(comment))
+
       socket.emit('comments', comment)
     }
   }
@@ -100,10 +104,7 @@ const Feed = props => {
 // export default Feed
 const mapStateToProps = ({ auth, user }) => ({ auth, user })
 
-export default connect(
-  mapStateToProps,
-  null
-)(withRouter(Feed))
+export default connect(mapStateToProps, null)(withRouter(Feed))
 
 Feed.propTypes = {
   auth: PropTypes.any,
