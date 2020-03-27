@@ -38,25 +38,32 @@ export const receivingComment = commentData => async dispatch => {
 }
 
 export const deleteComment = (comment_id, post_id) => async dispatch => {
-  const deletedComment = await axios.delete(`comments/${comment_id}`)
-  console.log('what happpen', deletedComment)
+  console.log('did this run ???')
+  const deletedComment = await axios.delete(`/comments/${comment_id}`)
   const commentData = { comment_id, post_id }
   dispatch({ type: types.DELETE_COMMENT, payload: commentData })
 }
 
 export const likePost = postData => async dispatch => {
-  // console.log(commentData)
+  dispatch({ type: 'LIKE_POST_REQUEST' })
+  const likedRecord = await axios.post(`/posts/like`, postData)
   dispatch({ type: types.LIKE_POST, payload: postData })
 }
 
 export const unlikePost = postData => async dispatch => {
+  dispatch({ type: 'UNLIKE_POST_REQUEST' })
+  const unlikedRecord = await axios.delete(`/posts/like/${postData.id}`)
   dispatch({ type: types.UNLIKE_POST, payload: postData })
 }
 
-export const ponyUp = data => dispatch => {
+export const ponyUp = data => async dispatch => {
+  dispatch({ type: 'PONY_UP_REQUEST' })
+  const ponyUpRecord = await axios.post(`/posts/pony`, data)
   dispatch({ type: types.PONY_UP, payload: data })
 }
 
-export const ponyDown = data => dispatch => {
+export const ponyDown = data => async dispatch => {
+  dispatch({ type: 'PONY_DOWN_REQUEST' })
+  const ponyDownRecord = await axios.delete(`/posts/pony/${data.id}`)
   dispatch({ type: types.PONY_DOWN, payload: data })
 }

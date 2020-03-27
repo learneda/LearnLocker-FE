@@ -43,6 +43,7 @@ const Feed = props => {
   }
 
   const handleClick = data => {
+    console.log(data, 'what is data ? ')
     socket.emit('like', data)
   }
 

@@ -6,12 +6,19 @@ import PonySVG from 'assets/react-svg/PonySVG'
 import styled from 'styled-components'
 import FeedModal from './FeedModal'
 
+// Redux
+import { useDispatch } from 'react-redux'
+
+// Actions
+import { likePost, unlikePost, ponyUp, ponyDown } from 'App/store/appActions'
+
 const FeedBar = props => {
   const { user_id, username, post, handleClick, handlePony } = props
   const [heart, setHeart] = useState(false)
   const [pony, setPony] = useState(false)
   const [isLikeModal, setLikeModal] = useState(false)
   const [isPonyModal, setPonyModal] = useState(false)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (post) {
@@ -26,14 +33,13 @@ const FeedBar = props => {
 
   const handleHeartClick = (e, post_id, post) => {
     const postOwnerId = post.user_id
-
     if (heart) {
       const data = {
         id: post_id,
         user_id: user_id,
         action: 'unlike',
       }
-      handleClick(data)
+      dispatch(unlikePost(data))
     } else {
       const data = {
         id: post_id,
@@ -42,7 +48,7 @@ const FeedBar = props => {
         postOwnerId,
         username: username,
       }
-      handleClick(data)
+      dispatch(likePost(data))
     }
     setHeart(prev => !prev)
   }
@@ -55,7 +61,7 @@ const FeedBar = props => {
         user_id: user_id,
         action: 'pony_down',
       }
-      handlePony(data)
+      dispatch(ponyDown(data))
     } else {
       const data = {
         id: post_id,
@@ -64,7 +70,7 @@ const FeedBar = props => {
         postOwnerId,
         username: username,
       }
-      handlePony(data)
+      dispatch(ponyUp(data))
     }
     setPony(prev => !prev)
   }
