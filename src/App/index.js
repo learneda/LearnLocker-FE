@@ -28,7 +28,7 @@ const App = props => {
     auth,
     fetchAuth,
     receivingNotifications,
-    createComment,
+    receivingComment,
     deleteComment,
     likePost,
     unlikePost,
@@ -52,12 +52,12 @@ const App = props => {
             // when action type === destroy
             case 'destroy':
               // invoke action creator deleteComment & pass in msg obj
-              deleteComment(msg)
+              // deleteComment(msg)
               break
             // when action type === create
             case 'create':
-              // invoke action creator createComment & pass in msg obj
-              createComment(msg)
+              // invoke action creator receivingComment & pass in msg obj
+              // receivingComment(msg)
               break
             default:
               break
@@ -132,16 +132,16 @@ const App = props => {
 
 const mapStateToProps = ({ auth }) => ({ auth })
 
-export default connect(
-  mapStateToProps,
-  { ...appActions, receivingNotifications }
-)(App)
+export default connect(mapStateToProps, {
+  ...appActions,
+  receivingNotifications,
+})(App)
 
 App.propTypes = {
   auth: PropTypes.any,
   fetchAuth: PropTypes.func.isRequired,
   receivingNotifications: PropTypes.func.isRequired,
-  createComment: PropTypes.func.isRequired,
+  receivingComment: PropTypes.func.isRequired,
   likePost: PropTypes.func.isRequired,
   unlikePost: PropTypes.func.isRequired,
   ponyUp: PropTypes.func.isRequired,

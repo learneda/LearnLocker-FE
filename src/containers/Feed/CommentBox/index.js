@@ -33,7 +33,6 @@ const CommentBox = props => {
     post_id,
     postOwnerId,
     profile_picture,
-    handleDeleteComment,
     handleSubmit,
     inputCommentRef,
   } = props
@@ -75,11 +74,7 @@ const CommentBox = props => {
                     </h2>
                     <span>{comment.content}</span>
                   </div>
-                  <Trash
-                    handleDeleteComment={handleDeleteComment}
-                    comment_id={comment.id}
-                    post_id={post_id}
-                  />
+                  <Trash comment_id={comment.id} post_id={post_id} />
                 </div>
               )
             } else {
@@ -138,7 +133,6 @@ CommentBox.propTypes = {
   post_id: PropTypes.number.isRequired,
   postOwnerId: PropTypes.number.isRequired,
   profile_picture: PropTypes.string.isRequired,
-  handleDeleteComment: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   inputCommentRef: PropTypes.node,
 }

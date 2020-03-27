@@ -49,7 +49,7 @@ export const homeReducer = (state = initialState, action) => {
         if (post.id === action.payload.post_id) {
           // filter out that comment obj
           post.comments = post.comments.filter(
-            comment => comment.id !== action.payload.id
+            comment => comment.id !== action.payload.comment_id
           )
         }
         return post

@@ -17,7 +17,6 @@ const PostContainer = props => {
     handleSubmit,
     handleClick,
     handlePony,
-    handleDeleteComment,
   } = props
 
   const displayMedia = post => {
@@ -138,7 +137,6 @@ const PostContainer = props => {
         handleClick={handleClick}
         handleSubmit={handleSubmit}
         profile_picture={profile_picture}
-        handleDeleteComment={handleDeleteComment}
         user_id={user_id}
         postOwnerId={post.user_id}
       />
@@ -163,7 +161,6 @@ PostContainer.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
   handlePony: PropTypes.func.isRequired,
-  handleDeleteComment: PropTypes.func.isRequired,
 }
 const Container = styled.div`
   position: relative;

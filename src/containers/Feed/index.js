@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { createComment } from 'pages/Home/store/homeActions'
+import { deleteComment } from 'App/store/appActions'
 import socket from 'App/socket'
 import styled from 'styled-components'
 import HelpScreen from 'components/Screens/HelpScreen'
@@ -22,7 +25,7 @@ const Feed = props => {
     fetchMoreFeed,
     fetchMoreTagFeed,
   } = props
-
+  const dispatch = useDispatch()
   const handleSubmit = (event, post_id, comment, postOwnerId) => {
     const body = comment.trim()
     if (body) {
@@ -34,16 +37,9 @@ const Feed = props => {
         username: user.username,
         postOwnerId,
       }
-      socket.emit('comments', comment)
+      dispatch(createComment(comment))
+      // socket.emit('comments', comment)
     }
-  }
-
-  const handleDeleteComment = (comment_id, post_id) => {
-    socket.emit('comments', {
-      action: 'destroy',
-      comment_id: comment_id,
-      post_id: post_id,
-    })
   }
 
   const handleClick = data => {
@@ -88,7 +84,6 @@ const Feed = props => {
             user_id={auth.id}
             username={user.username}
             profile_picture={user.profile_picture}
-            handleDeleteComment={handleDeleteComment}
             handlePony={handlePony}
           />
         ))}
@@ -100,10 +95,7 @@ const Feed = props => {
 // export default Feed
 const mapStateToProps = ({ auth, user }) => ({ auth, user })
 
-export default connect(
-  mapStateToProps,
-  null
-)(withRouter(Feed))
+export default connect(mapStateToProps, null)(withRouter(Feed))
 
 Feed.propTypes = {
   auth: PropTypes.any,

@@ -1,24 +1,21 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { ReactComponent as TrashSVG } from 'assets/svg/trash-2.svg'
+import { deleteComment } from 'App/store/appActions'
+import { useDispatch } from 'react-redux'
 
 const Trash = props => {
-  const { handleDeleteComment } = props
+  const dispatch = useDispatch()
   return (
     <TrashContainer>
       <TrashSVG
-        onClick={() => handleDeleteComment(props.comment_id, props.post_id)}
+        onClick={() => dispatch(deleteComment(props.comment_id, props.post_id))}
       />
     </TrashContainer>
   )
 }
 
 export default Trash
-
-Trash.propTypes = {
-  handleDeleteComment: PropTypes.func.isRequired,
-}
 
 const TrashContainer = styled.div`
   svg {
