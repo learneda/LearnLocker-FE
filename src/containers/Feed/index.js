@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { createComment } from 'pages/Home/store/homeActions'
-import { deleteComment } from 'App/store/appActions'
 import socket from 'App/socket'
 import styled from 'styled-components'
 import HelpScreen from 'components/Screens/HelpScreen'
@@ -43,7 +42,6 @@ const Feed = props => {
   }
 
   const handleClick = data => {
-    console.log(data, 'what is data ? ')
     socket.emit('like', data)
   }
 

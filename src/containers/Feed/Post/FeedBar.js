@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux'
 
 // Actions
 import { likePost, unlikePost, ponyUp, ponyDown } from 'App/store/appActions'
+import socket from 'App/socket'
 
 const FeedBar = props => {
   const { user_id, username, post, handleClick, handlePony } = props
@@ -31,46 +32,51 @@ const FeedBar = props => {
     }
   }, [])
 
-  const handleHeartClick = (e, post_id, post) => {
+  const handleHeartClick = async (e, post_id, post) => {
     const postOwnerId = post.user_id
+    const data = {
+      id: post_id,
+      user_id,
+    }
     if (heart) {
-      const data = {
-        id: post_id,
-        user_id: user_id,
-        action: 'unlike',
+      const res = await dispatch(unlikePost(data))
+      if (res.status === 204) {
+        socket.emit('like', { ...data, action: 'unlike' })
       }
-      dispatch(unlikePost(data))
     } else {
-      const data = {
-        id: post_id,
-        user_id: user_id,
+      const res = await dispatch(likePost(data))
+
+      socket.emit('like', {
+        ...res.data.response.record[0],
         action: 'like',
         postOwnerId,
-        username: username,
-      }
-      dispatch(likePost(data))
+        username,
+      })
     }
     setHeart(prev => !prev)
   }
 
-  const handlePonyClick = (e, post_id, post) => {
+  const handlePonyClick = async (e, post_id, post) => {
     const postOwnerId = post.user_id
+
+    const data = {
+      id: post_id,
+      user_id: user_id,
+    }
+
     if (pony) {
-      const data = {
-        id: post_id,
-        user_id: user_id,
-        action: 'pony_down',
+      const res = await dispatch(ponyDown(data))
+      if (res.status === 204) {
+        socket.emit('pony', { ...data, action: 'pony_down' })
       }
-      dispatch(ponyDown(data))
     } else {
-      const data = {
-        id: post_id,
-        user_id: user_id,
+      const res = await dispatch(ponyUp(data))
+      socket.emit('pony', {
+        ...res.data.response.record[0],
         action: 'pony_up',
         postOwnerId,
-        username: username,
-      }
-      dispatch(ponyUp(data))
+        username,
+      })
     }
     setPony(prev => !prev)
   }

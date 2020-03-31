@@ -48,22 +48,42 @@ export const likePost = postData => async dispatch => {
   dispatch({ type: 'LIKE_POST_REQUEST' })
   const likedRecord = await axios.post(`/posts/like`, postData)
   dispatch({ type: types.LIKE_POST, payload: postData })
+  return likedRecord
+}
+
+export const receivingLikePost = postData => async dispatch => {
+  dispatch({ type: types.RECEIVING_POST_LIKE, payload: postData })
 }
 
 export const unlikePost = postData => async dispatch => {
   dispatch({ type: 'UNLIKE_POST_REQUEST' })
   const unlikedRecord = await axios.delete(`/posts/like/${postData.id}`)
   dispatch({ type: types.UNLIKE_POST, payload: postData })
+  return unlikedRecord
+}
+
+export const receivingUnlikePost = postData => async dispatch => {
+  dispatch({ type: types.RECEIVING_POST_UNLIKE, payload: postData })
 }
 
 export const ponyUp = data => async dispatch => {
   dispatch({ type: 'PONY_UP_REQUEST' })
   const ponyUpRecord = await axios.post(`/posts/pony`, data)
   dispatch({ type: types.PONY_UP, payload: data })
+  return ponyUpRecord
+}
+
+export const receivingPonyUp = data => async dispatch => {
+  dispatch({ type: types.RECEIVING_PONY_UP, payload: data })
 }
 
 export const ponyDown = data => async dispatch => {
   dispatch({ type: 'PONY_DOWN_REQUEST' })
   const ponyDownRecord = await axios.delete(`/posts/pony/${data.id}`)
   dispatch({ type: types.PONY_DOWN, payload: data })
+  return ponyDownRecord
+}
+
+export const receivingPonyDown = data => async dispatch => {
+  dispatch({ type: types.RECEIVING_PONY_DOWN, payload: data })
 }

@@ -28,12 +28,10 @@ const App = props => {
     auth,
     fetchAuth,
     receivingNotifications,
-    receivingComment,
-    deleteComment,
-    likePost,
-    unlikePost,
-    ponyUp,
-    ponyDown,
+    receivingLikePost,
+    receivingUnlikePost,
+    receivingPonyUp,
+    receivingPonyDown,
   } = props
   // initial fetchAuth on browser mount
   useEffect(() => {
@@ -69,11 +67,11 @@ const App = props => {
           switch (data.action) {
             case 'unlike':
               // invoke action creator unlikePost & pass in msg obj
-              unlikePost(data)
+              receivingUnlikePost(data)
               break
             case 'like':
               // invoke action creator likePost & pass in msg obj
-              likePost(data)
+              receivingLikePost(data)
               break
             default:
               break
@@ -84,11 +82,11 @@ const App = props => {
           switch (data.action) {
             case 'pony_down':
               // invoke action creator ponyDown & pass in msg obj
-              ponyDown(data)
+              receivingPonyDown(data)
               break
             case 'pony_up':
               // invoke action creator ponyUp & pass in msg obj
-              ponyUp(data)
+              receivingPonyUp(data)
               break
             default:
               break
