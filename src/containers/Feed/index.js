@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { createComment } from 'pages/Home/store/homeActions'
+import { createComment } from 'App/store/appActions'
 import socket from 'App/socket'
 import styled from 'styled-components'
 import HelpScreen from 'components/Screens/HelpScreen'
@@ -37,7 +37,7 @@ const Feed = props => {
         postOwnerId,
       }
       dispatch(createComment(comment))
-      // socket.emit('comments', comment)
+      socket.emit('comments', comment)
     }
   }
 

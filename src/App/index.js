@@ -32,6 +32,7 @@ const App = props => {
     receivingUnlikePost,
     receivingPonyUp,
     receivingPonyDown,
+    receivingComment,
   } = props
   // initial fetchAuth on browser mount
   useEffect(() => {
@@ -55,7 +56,7 @@ const App = props => {
             // when action type === create
             case 'create':
               // invoke action creator receivingComment & pass in msg obj
-              // receivingComment(msg)
+              receivingComment(msg)
               break
             default:
               break

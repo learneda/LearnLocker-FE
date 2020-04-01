@@ -48,19 +48,3 @@ export const fetchMyTags = () => async dispatch => {
     dispatch({ type: types.FETCH_MY_TAGS, payload: myTags.data })
   }
 }
-
-export const createComment = commentData => async dispatch => {
-  const insertedComment = await axios.post('/comments', {
-    ...commentData,
-  })
-  console.log('what is this created comment', insertedComment)
-
-  dispatch({
-    type: 'CREATE_COMMENT',
-    payload: {
-      ...insertedComment.data.comment[0],
-      username: commentData.username,
-    },
-  })
-  // dispatch({ type: types.CREATE_COMMENT, payload: commentData })
-}
