@@ -37,6 +37,7 @@ const FeedBar = props => {
     const data = {
       id: post_id,
       user_id,
+      username,
     }
     if (heart) {
       const res = await dispatch(unlikePost(data))
@@ -45,7 +46,7 @@ const FeedBar = props => {
       }
     } else {
       const res = await dispatch(likePost(data))
-
+      console.log('res', res)
       socket.emit('like', {
         ...res.data.response.record[0],
         action: 'like',

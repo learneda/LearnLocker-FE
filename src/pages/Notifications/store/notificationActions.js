@@ -22,3 +22,7 @@ export const getNotifications = () => async dispatch => {
 export const receivingNotifications = data => async dispatch => {
   dispatch({ type: types.RECEIVING_NOTIFICATION, payload: data })
 }
+
+// export const sendNotifications = data => async dispatch => {
+//   disaptch({ type: types.})
+// }

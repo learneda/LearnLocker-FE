@@ -45,8 +45,19 @@ export const deleteComment = (comment_id, post_id) => async dispatch => {
 export const likePost = postData => async dispatch => {
   dispatch({ type: 'LIKE_POST_REQUEST' })
   const likedRecord = await axios.post(`/posts/like`, postData)
+  let addedNotification
+  // if (likedRecord.status === 201) {
+  //   // if the like is added to db successfully, add notification to db and return data for socket to emit
+  //   const username = likedRecord.config.data['username']
+  //   const data = {
+  //     ...likedRecord.data.response.record[0],
+  //     type: 'like',
+  //     username,
+  //   }
+  //   addedNotification = await axios.post(`/posts/like`, data)
+  // }
   dispatch({ type: types.LIKE_POST, payload: postData })
-  return likedRecord
+  return { ...likedRecord, ...addedNotification }
 }
 
 export const receivingLikePost = postData => async dispatch => {
