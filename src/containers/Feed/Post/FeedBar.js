@@ -48,7 +48,7 @@ const FeedBar = props => {
       const res = await dispatch(likePost(data))
       console.log('res', res)
       socket.emit('like', {
-        ...res.data.response.record[0],
+        ...res.data[0],
         action: 'like',
         postOwnerId,
         username,
